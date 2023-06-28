@@ -1,0 +1,8 @@
+# Disable Hyper V in power shell
+Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Hypervisor
+
+# Enable Hyper V in power shell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+
+# Edit virtual machine
+BIOS - MIT - расширенные настройки частот - advanced CPU settings - SVM mode
