@@ -33,14 +33,21 @@ with MyManager as mgr:
 # ------------------------------------------
 # Что такое декоратор? Как написать?
 # Ответ: см. замыкание
-def my_decorator():
-    def foobar():
-        print("Hello world")
-    return foobar
+def counter(func):
+    """Обертка для подсчета количества вызовов функции"""
+    def wrapper(*args, **kwargs):
+        wrapper.count += 1
+        res = func(*args, **kwargs)
+        print(f"{func.__name__} called {wrapper.count} times")
+        return res
+    wrapper.count = 0
+    return wrapper
 
-@my_decorator
+@counter
 def foobar():
-    print("Hello world")
+    pass
+
+foobar()  # foobar called 1 times
 
 
 # ------------------------------------------
