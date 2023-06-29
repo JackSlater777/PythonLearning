@@ -15,19 +15,25 @@ finally:
 
 # ------------------------------------------
 # Что такое менеджер контекста? Как его создать через класс? Что нужно написать в методе __exit__?
-# Ответ: обработку исключений (доделать!)
+# Ответ: обработку исключений
 with open('1.txt', 'w') as file:
     file.write("Hello, Ozon!")
 
-class MyManager:
+class MyCtxManager:
+    # Выполняется перед кодом, который обернут
     def __enter__(self):
-        pass
+        print("Hello")
 
-    def __exit__(self):
-        pass
+    # Выполняется после кода, который обернут.
+    # Код внутри exit выполнится всегда, даже если выбросится исключение перед ним.
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Bye")
 
-with MyManager as mgr:
-    pass
+with MyCtxManager() as myctxmgr:
+    x = 100
+    y = 200
+    # raise Exception
+    print(f"{x + y = }")
 
 
 # ------------------------------------------
@@ -54,10 +60,13 @@ foobar()  # foobar called 1 times
 # Что такое генератор? Особенности?
 # Ответ: это объект, который позволяет получать из итерируемого объекта порционно (ПЕРЕДЕЛАТЬ!)
 def gen(n):
-    yield range(n)
+    i = 0
+    while i < n:
+        yield i
+        i += 1
 
-lst = [i for i in gen(5)]  # [range(0, 5)]
-print(lst)
+lst = [i for i in gen(5)]
+print(lst)  # [0, 1, 2, 3, 4]
 
 
 # ------------------------------------------
